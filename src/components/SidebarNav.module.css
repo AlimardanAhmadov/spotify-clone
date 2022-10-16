@@ -1,0 +1,19 @@
+.sidebarNav {
+    color: #B3B3B3;
+    cursor: pointer;
+    transition: 200ms color ease-in;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 16px;
+}
+
+.sidebarNav:hover {
+    color: #fff;
+}
+
+.sidebarNav__icon {
+    font-size: 30px;
+}

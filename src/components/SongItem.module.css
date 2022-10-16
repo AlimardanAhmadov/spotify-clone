@@ -1,0 +1,32 @@
+.songItem {
+    padding: 9px 20px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.songItem:hover {
+    cursor: pointer;
+    background-color: hsla(0,0%,100%,.3);
+    opacity: 0.8;
+}
+
+.songItem__info {
+    margin-left: 20px;
+}
+
+.songItem__info > h1 {
+    font-size: 16px;
+}
+
+.songItem__info > p{
+    font-size: 14px;
+    margin-top: 3px;
+    color: #fff;
+}
+
+.songItem__album {
+    height: 40px;
+    width: 40px;
+}

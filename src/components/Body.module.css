@@ -1,0 +1,63 @@
+.body {
+    flex: 0.835;
+    background: linear-gradient(rgb(91, 87, 115), rgba(0, 0, 0, 1));
+    height: 100vh;
+    color: #fff;
+    padding: 12px 30px;
+    overflow-y: overlay;
+}
+
+.body::-webkit-scrollbar {
+    display: none;
+}
+
+.body__info {
+    display: flex;
+    align-items: flex-end;
+    gap: 35px;
+}
+
+.body__info > img {
+    height: 16vw;
+    box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
+}
+
+.body__infoText {
+    flex: 1;
+}
+
+.body__infoText > h2 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.body__infoText > p{
+    font-size: 14px;
+}
+
+.songs__icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+} 
+
+.body__shuffle {
+    font-size: 70px !important;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #1ed15e;
+}
+
+.body__shuffle:hover {
+    transition: 100ms transform ease-in;
+    transform: scale(1.08);
+}
+
+.songs__icons > svg {
+    fill: hsla(0,0%,100%,.7);
+    transition: 0.2s;
+}
+
+.songs__icons > svg:hover {
+    fill: #fff !important;
+}

@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.header__left {
+    flex: 0.5;
+    min-width: 70px;
+    background-color: #fff;
+    color: rgb(128, 128, 128);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.header__left > input {
+    border: none;
+    width: 100%;
+}
+
+.header__profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.header__profile > div {
+    height: 30px !important;
+    width: 30px !important;
+}
