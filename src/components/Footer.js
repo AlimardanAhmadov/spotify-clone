@@ -9,6 +9,7 @@ import RepeatIcon from "@material-ui/icons/Repeat";
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
 import VolumeDownIcon from "@material-ui/icons/VolumeDown";
 import SpotifyWebApi from "spotify-web-api-js";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import { useStateValue } from "../StateProvider";
 
@@ -94,8 +95,9 @@ export default function Footer() {
         />
         <div className="playingSongInfo">
           <h4>{ currentSongName }</h4>
-          <small>{ currentSongArtist } May</small>
+          <small>{ currentSongArtist }</small>
         </div>
+        <FavoriteBorderIcon />
       </div>
       <div className="footer__middle">
         <ShuffleIcon className="footer__green" />

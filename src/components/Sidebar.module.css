@@ -37,3 +37,10 @@
     flex-direction: column;
     gap: 17px;
 }
+
+.sidebar__SecondLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 30px;
+}

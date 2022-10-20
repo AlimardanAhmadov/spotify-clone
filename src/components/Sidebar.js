@@ -5,6 +5,9 @@ import SidebarNav from "./SidebarNav";
 import HomeIcon from "@material-ui/icons/Home";
 import SearchIcon from "@material-ui/icons/Search";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+
 import { useStateValue } from '../StateProvider';
 
 export default function Sidebar() {
@@ -21,6 +24,11 @@ export default function Sidebar() {
         <SidebarNav link='/home' icon={HomeIcon} title="Home" />
         <SidebarNav link='/search' icon={SearchIcon} title="Search" />
         <SidebarNav link='/' icon={LibraryMusicIcon} title="Your Library" />
+      </div>
+
+      <div className={classes.sidebar__SecondLinks}>
+        <SidebarNav icon={AddBoxIcon} title="Create Playlist" />
+        <SidebarNav img='https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png' icon={FavoriteIcon} title="Liked Songs" />
       </div>
 
       <strong className={classes.sidebar__title}>PLAYLISTS</strong>

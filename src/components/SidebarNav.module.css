@@ -10,10 +10,29 @@
     padding: 0 16px;
 }
 
+.sidebarNav > svg {
+    font-size: 1.8rem;
+}
+
 .sidebarNav:hover {
     color: #fff;
 }
 
 .sidebarNav__icon {
     font-size: 30px;
+}
+
+.sidebarNav > div {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    align-items: center;
+    background: linear-gradient(135deg,#450af5,#c4efd9);
+    border-radius: 2px;
+    display: flex;
+    height: 21.6px;
+    justify-content: center;
+    width: 21.6px;
+    margin: 0 3.5px;
 }
