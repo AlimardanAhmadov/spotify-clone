@@ -70,9 +70,23 @@
     font-weight: 500;
 }
 
+@media screen and (max-width: 1160px) {
+    .playingSongInfo > h4 {
+        font-size: 14px;
+        font-weight: 500;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 120px;
+    }
+}
+
 .playingSongInfo > small {
     font-size: 11px;
     color: #b3b3b3;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .footer__green {

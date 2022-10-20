@@ -1,0 +1,44 @@
+:root {
+    --background-noise: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=);
+    --background-base: #121212;
+    --decorative-subdued: #292929;
+}
+
+.home__body {
+    flex: 0.835;
+    height: 100vh;
+    color: #fff;
+    padding: 12px 30px;
+    overflow-y: overlay;
+    background-color: rgb(72, 32, 176);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,.6)),to(var(--background-base))),var(--background-noise);
+    background-image: linear-gradient(rgba(0,0,0,.6) 0,var(--background-base) 50%),var(--background-noise);
+}
+
+.homeGreeter {
+    font-size: 32px;
+}
+
+.artistsGrid {
+    margin-top: 16px;
+    display: grid;
+    grid-template: auto/repeat(auto-fill,minmax(max(270px,25%),1fr));
+    grid-gap: 16px 24px;
+}
+
+
+.home__mixes {
+    margin-top: 40px;
+}
+
+.footerDiv {
+    padding-top: 50px;
+    height: 150px;
+}
+
+.footerDiv > div {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    border: 0px;
+    border-block-start: 1px solid var(--decorative-subdued,#dedede);
+}

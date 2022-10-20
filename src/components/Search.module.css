@@ -1,0 +1,15 @@
+.header__search {
+    flex: 0.5;
+    min-width: 70px;
+    background-color: #fff;
+    color: rgb(128, 128, 128);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.header__search > input {
+    border: none;
+    width: 100%;
+}

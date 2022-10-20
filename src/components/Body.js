@@ -1,18 +1,82 @@
-import React from "react";
-import { useStateValue } from "../StateProvider";
+import React, { useEffect, useRef } from "react";
 import classes from "./Body.module.css";
 import Header from "./Header";
 import SongItem from "./SongItem";
+import SpotifyWebApi from "spotify-web-api-js";
+
+import { useStateValue } from "../StateProvider";
 
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 
+const spotify = new SpotifyWebApi();
 
 export default function Body() {
   const [{ discover_weekly }, dispatch] = useStateValue();
+  console.log(discover_weekly);
+
+  const playPlaylist = (id) => {
+    spotify
+      .play({
+        context_uri: `spotify:playlist:37i9dQZEVXcJZyENOWUFo7`,
+      })
+      .then((res) => {
+        spotify.getMyCurrentPlayingTrack().then((r) => {
+          dispatch({
+            type: "SET_ITEM",
+            item: r.item,
+          });
+          dispatch({
+            type: "SET_PLAYING",
+            playing: true,
+          });
+        });
+      });
+  };
+
+  const playSong = (id) => {
+    spotify
+      .play({
+        uris: [`spotify:track:${id}`],
+      })
+      .then((res) => {
+        spotify.getMyCurrentPlayingTrack().then((r) => {
+          dispatch({
+            type: "SET_ITEM",
+            item: r.item,
+          });
+          dispatch({
+            type: "SET_PLAYING",
+            playing: true,
+          });
+        });
+      });
+  };
+
+  const ref = useRef();
+  const header = document.getElementById("Header");
+
+  const listenScrollEvent = (event) => {
+    if (ref.current.scrollTop >= 100) {
+      if (header) document.getElementById("Header").classList.add("newHeader");
+    } 
+    else {
+      if (header)
+        document.getElementById("Header").classList.remove("newHeader");
+    }
+  };
+
+  useEffect(() => {
+    if (ref.current !== undefined) {
+      ref.current.addEventListener("scroll", listenScrollEvent);
+      //return () => ref.current.addEventListener('scroll', listenScrollEvent);
+    }
+  }, []);
 
   return (
-    <div className={classes.body}>
-      <Header />
+    <div className={classes.body} ref={ref}>
+      <header>
+        <Header />
+      </header>
       <div className={classes.body__info}>
         <img src={discover_weekly?.images[0].url} />
         <div className={classes.body__infoText}>
@@ -24,7 +88,11 @@ export default function Body() {
 
       <div className={classes.songs__section}>
         <div className={classes.songs__icons}>
-          <PlayCircleFilledIcon style={{ color: '#1ed15e', fill: 'rgb(30, 209, 94)'}} className={classes.body__shuffle} />
+          <PlayCircleFilledIcon
+            onclick={playPlaylist}
+            style={{ color: "#1ed15e", fill: "rgb(30, 209, 94)" }}
+            className={classes.body__shuffle}
+          />
           <svg
             className={classes.songIcon}
             role="img"
@@ -46,8 +114,8 @@ export default function Body() {
             <path d="M4.5 13.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm15 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-7.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
           </svg>
         </div>
-        {discover_weekly?.tracks.items.map(item => (
-          <SongItem track={item.track}/>
+        {discover_weekly?.tracks.items.map((item) => (
+          <SongItem playSong={playSong} onclick={playSong} track={item.track} />
         ))}
       </div>
     </div>

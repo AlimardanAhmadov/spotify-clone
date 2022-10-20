@@ -1,0 +1,60 @@
+.newHeader,
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color .25s;
+    margin-bottom: 30px;
+    padding: 16px 32px;
+    position: fixed;
+    left: 244px;
+    z-index: 1;
+    right: 0;
+    top: 0;
+}
+
+.header__profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: rgba(0,0,0,.7);
+    border-radius: 23px;
+    padding: 2px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.header__profile:hover {
+    background-color: #282828;
+}
+
+.header__profile > div {
+    height: 30px !important;
+    width: 30px !important;
+}
+
+.header__left {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.header__left > button {
+    background-color: rgba(0,0,0,.7);
+    opacity: 0.6;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-flex;
+    height: 32px;
+    justify-content: center;
+    width: 32px;
+    align-items: center;
+}
+
+.header__left > button > svg {
+    height: 22px;
+    opacity: 1;
+    width: 22px;
+    fill: #fff;
+}

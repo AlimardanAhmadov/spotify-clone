@@ -14,7 +14,7 @@
 .body__info {
     display: flex;
     align-items: flex-end;
-    gap: 35px;
+    gap: 24px;
 }
 
 .body__info > img {
@@ -27,7 +27,7 @@
 }
 
 .body__infoText > h2 {
-    font-size: 3rem;
+    font-size: 6vw;
     margin-bottom: 10px;
 }
 

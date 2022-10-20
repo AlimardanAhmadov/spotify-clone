@@ -1,10 +1,13 @@
 import './App.css';
 import React, { useEffect } from "react";
 import Login from './pages/Login';
-import { getTokenFromUrl } from './spotify';
 import SpotifyWebApi from "spotify-web-api-js";
 import Player from "./pages/Player";
+import Home from './pages/Home';
+
 import { useStateValue } from './StateProvider';
+import { Routes, Route } from 'react-router-dom';
+import { getTokenFromUrl } from './spotify';
 
 const spotify = new SpotifyWebApi();
 
@@ -32,6 +35,7 @@ function App() {
       }); 
 
       spotify.getUserPlaylists().then((playlists) => {
+        console.log(playlists);
         dispatch({
           type: "SET_PLAYLISTS",
           playlists: playlists
@@ -44,6 +48,27 @@ function App() {
           discover_weekly: response
         })
       )
+
+      spotify.getFeaturedPlaylists().then(response => 
+        dispatch({
+          type: 'SET_MY_TOP_TRACKS',
+          featured_playlists: response
+        })
+      )
+
+      spotify.getMyTopArtists().then(response => 
+        dispatch({
+          type: 'SET_FEATURED_ARTISTS',
+          featured_artists: response
+        })
+      )
+
+      spotify.getMyRecentlyPlayedTracks().then(data =>
+        dispatch({
+          type: "SET_RECENTLY_PLAYED_TRACKS",
+          recently_played_tracks: data
+        })
+      );
     }
 
   }, []);
@@ -52,7 +77,24 @@ function App() {
     <div className="app">
       {
         token ? (
-          <Player spotify={spotify} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Player spotify={spotify} />
+                </>
+              }>
+            </Route>
+            <Route
+              path="/home"
+              element={
+                <>
+                  <Home spotify={spotify} />
+                </>
+              }>
+            </Route>
+          </Routes>
         ) : (
           <Login />
         )

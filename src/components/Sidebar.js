@@ -18,9 +18,9 @@ export default function Sidebar() {
         alt="logo"
       />
       <div className={classes.sidebar__links}>
-        <SidebarNav icon={HomeIcon} title="Home" />
-        <SidebarNav icon={SearchIcon} title="Search" />
-        <SidebarNav icon={LibraryMusicIcon} title="Your Library" />
+        <SidebarNav link='/home' icon={HomeIcon} title="Home" />
+        <SidebarNav link='/search' icon={SearchIcon} title="Search" />
+        <SidebarNav link='/' icon={LibraryMusicIcon} title="Your Library" />
       </div>
 
       <strong className={classes.sidebar__title}>PLAYLISTS</strong>
