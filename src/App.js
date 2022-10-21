@@ -35,7 +35,6 @@ function App() {
       }); 
 
       spotify.getUserPlaylists().then((playlists) => {
-        console.log(playlists);
         dispatch({
           type: "SET_PLAYLISTS",
           playlists: playlists
@@ -79,7 +78,7 @@ function App() {
         token ? (
           <Routes>
             <Route
-              path="/"
+              path="/playlist/:id"
               element={
                 <>
                   <Player spotify={spotify} />
@@ -87,7 +86,7 @@ function App() {
               }>
             </Route>
             <Route
-              path="/home"
+              path="/"
               element={
                 <>
                   <Home spotify={spotify} />

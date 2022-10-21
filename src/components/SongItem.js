@@ -23,13 +23,12 @@ export default function SongItem(props) {
         item: r.item,
       });
       
-      setCurrentSongName(r.item.name);
+      setCurrentSongName(r.item?.name);
     });
   }, [spotify]);
 
   const handlePlayPause = () => {
     if (playing) {
-      console.log(item);
       spotify.pause();
       dispatch({
         type: "SET_PLAYING",
@@ -47,18 +46,18 @@ export default function SongItem(props) {
   return (
     <div className={classes.songItem} onClick={handlePlayPause}>
       {
-        currentSongName === props.track.name ? (
+        currentSongName === props.track?.name ? (
           <p><PauseIcon /></p>
         ) : (
           <p></p>
         )
       }
-      <img className={classes.songItem__album} src={props.track.album.images[0].url} alt="" />
+      <img className={classes.songItem__album} src={props.track?.album?.images[0].url} alt="" />
       <div className={classes.songItem__info}>
-        <h1>{props.track.name}</h1>
+        <h1>{props.track?.name}</h1>
         <p>
-          {props.track.artists.map((artist) => artist.name).join(", ")} -{" "}
-          {props.track.name}
+          {props.track?.artists.map((artist) => artist.name).join(", ")} -{" "}
+          {props.track?.name}
         </p>
       </div>
     </div>

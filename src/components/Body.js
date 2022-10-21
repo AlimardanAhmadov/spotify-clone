@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./Body.module.css";
 import Header from "./Header";
 import SongItem from "./SongItem";
@@ -11,8 +11,8 @@ import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 const spotify = new SpotifyWebApi();
 
 export default function Body() {
-  const [{ discover_weekly }, dispatch] = useStateValue();
-  console.log(discover_weekly);
+  const [{ discover_weekly, token }, dispatch] = useStateValue();
+  const [currentList, setCurrentList] = useState([]);
 
   const playPlaylist = (id) => {
     spotify
@@ -51,17 +51,25 @@ export default function Body() {
         });
       });
   };
+  var url = String(document.location.href);
+  var slash = url.split("/");
+  let id = slash[slash.length - 1];
+
+  spotify.setAccessToken(token);
+  spotify.getPlaylist(id).then((response) => setCurrentList(response));
+
+  const primary_color = currentList.primary_color;
 
   const ref = useRef();
-  const header = document.getElementById("Header");
+  const headerContainer = document.getElementById("headerContainer");
 
   const listenScrollEvent = (event) => {
-    if (ref.current.scrollTop >= 100) {
-      if (header) document.getElementById("Header").classList.add("newHeader");
-    } 
-    else {
-      if (header)
-        document.getElementById("Header").classList.remove("newHeader");
+    if (ref.current.scrollTop >= 100) { 
+      document.getElementById("headerContainer").style.opacity = "1";
+      ref.current.classList.add("blackBg"); 
+    } else { 
+      document.getElementById("headerContainer").style.opacity = "0";
+      ref.current.classList.remove("blackBg"); 
     }
   };
 
@@ -73,16 +81,22 @@ export default function Body() {
   }, []);
 
   return (
-    <div className={classes.body} ref={ref}>
+    <div
+      className={classes.body}
+      ref={ref}
+      style={{ backgroundColor: primary_color }}
+    >
       <header>
+        <div id="headerContainer" className={classes.headerContainer} style={{ backgroundColor: primary_color }}>
+        </div>
         <Header />
       </header>
       <div className={classes.body__info}>
-        <img src={discover_weekly?.images[0].url} />
+        <img src={currentList?.images?.[0].url} />
         <div className={classes.body__infoText}>
-          <strong>PLAYLIST</strong>
-          <h2>Discover Weekly</h2>
-          <p>{discover_weekly?.description}</p>
+          <strong>{currentList?.type}</strong>
+          <h2>{currentList?.name}</h2>
+          <p>{currentList?.description}</p>
         </div>
       </div>
 
@@ -114,8 +128,8 @@ export default function Body() {
             <path d="M4.5 13.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm15 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-7.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
           </svg>
         </div>
-        {discover_weekly?.tracks.items.map((item) => (
-          <SongItem playSong={playSong} onclick={playSong} track={item.track} />
+        {currentList?.tracks?.items.map((item) => (
+          <SongItem playSong={playSong} onclick={playSong} track={item?.track} />
         ))}
       </div>
     </div>

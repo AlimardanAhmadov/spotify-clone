@@ -1,6 +1,7 @@
 .body {
     flex: 0.835;
-    background: linear-gradient(rgb(91, 87, 115), rgba(0, 0, 0, 1));
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,.6)),to(var(--background-base))),var(--background-noise);
+    background-image: linear-gradient(rgba(0,0,0,.5) 0,var(--background-base) 71%),var(--background-noise);
     height: 100vh;
     color: #fff;
     padding: 12px 30px;
@@ -24,6 +25,11 @@
 
 .body__infoText {
     flex: 1;
+}
+
+.body__infoText > strong {
+    font-size: 12px;
+    text-transform: uppercase;
 }
 
 .body__infoText > h2 {
@@ -60,4 +66,15 @@
 
 .songs__icons > svg:hover {
     fill: #fff !important;
+}
+
+.headerContainer {
+    transition: background-color .25s;
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 244px;
+    height: 68px;
+    opacity: 0;
+    pointer-events: none;
 }
