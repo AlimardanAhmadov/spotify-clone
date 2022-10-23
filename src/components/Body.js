@@ -10,9 +10,10 @@ import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 
 const spotify = new SpotifyWebApi();
 
-export default function Body() {
-  const [{ discover_weekly, token }, dispatch] = useStateValue();
+export default function Body(props) {
+  const [{ token }, dispatch] = useStateValue();
   const [currentList, setCurrentList] = useState([]);
+  const [topTracksList, setTopTracksList] = useState([]);
 
   const playPlaylist = (id) => {
     spotify
@@ -54,22 +55,28 @@ export default function Body() {
   var url = String(document.location.href);
   var slash = url.split("/");
   let id = slash[slash.length - 1];
+  let pageType = slash[slash.length - 2];
 
-  spotify.setAccessToken(token);
-  spotify.getPlaylist(id).then((response) => setCurrentList(response));
+  if (pageType === "playlist") {
+    spotify.setAccessToken(token);
+    spotify.getPlaylist(id).then((response) => setCurrentList(response));
+  } else {
+    spotify.setAccessToken(token);
+    spotify.getArtist(id).then((response) => setCurrentList(response));
+    spotify.getArtistAlbums(id).then((data) => setTopTracksList(data));
+  }
 
-  const primary_color = currentList.primary_color;
+  var primary_color = currentList.primary_color;
 
   const ref = useRef();
-  const headerContainer = document.getElementById("headerContainer");
 
   const listenScrollEvent = (event) => {
-    if (ref.current.scrollTop >= 100) { 
+    if (ref.current.scrollTop >= 100) {
       document.getElementById("headerContainer").style.opacity = "1";
-      ref.current.classList.add("blackBg"); 
-    } else { 
+      ref.current.classList.add("blackBg");
+    } else {
       document.getElementById("headerContainer").style.opacity = "0";
-      ref.current.classList.remove("blackBg"); 
+      ref.current.classList.remove("blackBg");
     }
   };
 
@@ -77,6 +84,10 @@ export default function Body() {
     if (ref.current !== undefined) {
       ref.current.addEventListener("scroll", listenScrollEvent);
       //return () => ref.current.addEventListener('scroll', listenScrollEvent);
+    }
+
+    if (pageType === "playlist") {
+      
     }
   }, []);
 
@@ -87,17 +98,61 @@ export default function Body() {
       style={{ backgroundColor: primary_color }}
     >
       <header>
-        <div id="headerContainer" className={classes.headerContainer} style={{ backgroundColor: primary_color }}>
-        </div>
+        <div
+          id="headerContainer"
+          className={classes.headerContainer}
+          style={{ backgroundColor: primary_color }}
+        ></div>
         <Header />
       </header>
       <div className={classes.body__info}>
-        <img src={currentList?.images?.[0].url} />
-        <div className={classes.body__infoText}>
-          <strong>{currentList?.type}</strong>
-          <h2>{currentList?.name}</h2>
-          <p>{currentList?.description}</p>
-        </div>
+        {props.bodyType === "playlist" ? (
+          <>
+            <img src={currentList?.images?.[0].url} />
+            <div className={classes.body__infoText}>
+              <strong>{currentList?.type}</strong>
+              <h2>{currentList?.name}</h2>
+              <p>{currentList?.description}</p>
+            </div>
+          </>
+        ) : (
+          <>
+            {currentList?.type === "artist" ? (
+              <>
+                <img
+                  style={{
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    zIndex: "1",
+                    width: "16vw",
+                  }}
+                  src={currentList?.images?.[0].url}
+                />
+                <div className={classes.body__infoText}>
+                  <div className={classes.verified}>
+                    <div className={classes.verifiedBg}></div>
+                    <svg
+                      role="img"
+                      height="24"
+                      width="24"
+                      class="Svg-ytk21e-0 hFEdcY b0NcxAbHvRbqgs2S8QDg"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M10.814.5a1.658 1.658 0 012.372 0l2.512 2.572 3.595-.043a1.658 1.658 0 011.678 1.678l-.043 3.595 2.572 2.512c.667.65.667 1.722 0 2.372l-2.572 2.512.043 3.595a1.658 1.658 0 01-1.678 1.678l-3.595-.043-2.512 2.572a1.658 1.658 0 01-2.372 0l-2.512-2.572-3.595.043a1.658 1.658 0 01-1.678-1.678l.043-3.595L.5 13.186a1.658 1.658 0 010-2.372l2.572-2.512-.043-3.595a1.658 1.658 0 011.678-1.678l3.595.043L10.814.5zm6.584 9.12a1 1 0 00-1.414-1.413l-6.011 6.01-1.894-1.893a1 1 0 00-1.414 1.414l3.308 3.308 7.425-7.425z"></path>
+                    </svg>
+                    <span>Verified artist</span>
+                  </div>
+                  <h2>{currentList?.name}</h2>
+                  <p className={classes.followersCount}>
+                    {currentList?.followers?.total} monthly listeners
+                  </p>
+                </div>
+              </>
+            ) : (
+              <p>Ok</p>
+            )}
+          </>
+        )}
       </div>
 
       <div className={classes.songs__section}>
@@ -107,16 +162,7 @@ export default function Body() {
             style={{ color: "#1ed15e", fill: "rgb(30, 209, 94)" }}
             className={classes.body__shuffle}
           />
-          <svg
-            className={classes.songIcon}
-            role="img"
-            height="32"
-            width="32"
-            viewBox="0 0 24 24"
-            class="Svg-ytk21e-0 jAKAlG"
-          >
-            <path d="M5.21 1.57a6.757 6.757 0 016.708 1.545.124.124 0 00.165 0 6.741 6.741 0 015.715-1.78l.004.001a6.802 6.802 0 015.571 5.376v.003a6.689 6.689 0 01-1.49 5.655l-7.954 9.48a2.518 2.518 0 01-3.857 0L2.12 12.37A6.683 6.683 0 01.627 6.714 6.757 6.757 0 015.21 1.57zm3.12 1.803a4.757 4.757 0 00-5.74 3.725l-.001.002a4.684 4.684 0 001.049 3.969l.009.01 7.958 9.485a.518.518 0 00.79 0l7.968-9.495a4.688 4.688 0 001.049-3.965 4.803 4.803 0 00-3.931-3.794 4.74 4.74 0 00-4.023 1.256l-.008.008a2.123 2.123 0 01-2.9 0l-.007-.007a4.757 4.757 0 00-2.214-1.194z"></path>
-          </svg>
+          <button>Follow</button>
           <svg
             className={classes.songIcon}
             role="img"
@@ -128,9 +174,22 @@ export default function Body() {
             <path d="M4.5 13.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm15 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-7.5 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
           </svg>
         </div>
-        {currentList?.tracks?.items.map((item) => (
-          <SongItem playSong={playSong} onclick={playSong} track={item?.track} />
-        ))}
+        {pageType === "playlist"
+          ? currentList?.tracks?.items.map((item) => (
+              <SongItem
+                playSong={playSong}
+                onclick={playSong}
+                track={item?.track}
+              />
+            ))
+          : topTracksList?.items?.map((item) => (
+              <SongItem
+                playSong={playSong}
+                onclick={playSong}
+                track={item}
+                topTrack="topTrack"
+              />
+            ))}
       </div>
     </div>
   );

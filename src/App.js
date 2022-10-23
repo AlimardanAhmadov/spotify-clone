@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import { useStateValue } from './StateProvider';
 import { Routes, Route } from 'react-router-dom';
 import { getTokenFromUrl } from './spotify';
+import Artist from './pages/Artist';
 
 const spotify = new SpotifyWebApi();
 
@@ -77,6 +78,14 @@ function App() {
       {
         token ? (
           <Routes>
+            <Route
+              path="/artist/:id"
+              element={
+                <>
+                  <Artist spotify={spotify} />
+                </>
+              }>
+            </Route>
             <Route
               path="/playlist/:id"
               element={

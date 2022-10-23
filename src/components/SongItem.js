@@ -52,14 +52,29 @@ export default function SongItem(props) {
           <p></p>
         )
       }
-      <img className={classes.songItem__album} src={props.track?.album?.images[0].url} alt="" />
-      <div className={classes.songItem__info}>
-        <h1>{props.track?.name}</h1>
-        <p>
-          {props.track?.artists.map((artist) => artist.name).join(", ")} -{" "}
-          {props.track?.name}
-        </p>
-      </div>
+      {props.topTrack ? 
+      <>  
+        <img className={classes.songItem__album} src={props.track?.images[0].url} alt="" />
+        <div className={classes.songItem__info}>
+          <h1>{props.track?.name}</h1>
+          <p>
+            {props.track?.artists.map((artist) => artist.name).join(", ")} -{" "}
+            {props.track?.name}
+          </p>
+        </div>
+      </>
+      :
+      <>
+        <img className={classes.songItem__album} src={props.track?.album?.images[0].url} alt="" />
+        <div className={classes.songItem__info}>
+          <h1>{props.track?.name}</h1>
+          <p>
+            {props.track?.artists.map((artist) => artist.name).join(", ")} -{" "}
+            {props.track?.name}
+          </p>
+        </div>
+      </>
+      }
     </div>
   );
 }

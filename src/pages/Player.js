@@ -9,7 +9,7 @@ export default function Player(props) {
     <div className={classes.main}>
       <div className={classes.main__body}>
         <Sidebar />
-        <Body />
+        <Body bodyType='playlist' />
       </div>
       <Footer />
     </div>

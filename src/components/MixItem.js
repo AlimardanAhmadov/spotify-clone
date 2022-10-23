@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import classes from "./MixItem.module.css";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import SpotifyWebApi from "spotify-web-api-js";
 
 import { useStateValue } from "../StateProvider";
+import { Link } from "react-router-dom";
 
 const spotify = new SpotifyWebApi();
 
@@ -14,7 +14,7 @@ export default function MixItem(props) {
   const [mixName, setMixName] = useState(" ");
 
   var uri = props.context?.uri.substring(17);
-  var artistId = props.item.artists?.[0];
+  var artistId = props.item?.artists?.[0];
 
   if (props.context?.type === "playlist") {
     spotify.setAccessToken(token);
@@ -32,7 +32,7 @@ export default function MixItem(props) {
   }
 
   return (
-    <Link to={props.item.type === 'playlist' ? `playlist/${props.item.id}` : `artist/${props.item.id}`}>
+    <Link to={props?.type !== 'Recently played' ? (props.item?.type === 'playlist' ? `playlist/${props?.item?.id}` : `artist/${props?.item?.id}`) : `artist/${props.item?.artists?.[0]?.id}`}>
       <div className={classes.mixItem}>
         <div className={classes.itemTop}>
           {props.type ? (
@@ -42,7 +42,7 @@ export default function MixItem(props) {
               <img src={mixCover} style={{ borderRadius: "50%" }} />
             )
           ) : (
-            props.artist ? <img style={{ borderRadius: "50%" }} src={props.item.images[0]?.url} alt={props.item.name} /> : <img src={props.item.images[0]?.url} alt={props.item.name} />
+            props.artist ? <img style={{ borderRadius: "50%" }} src={props.item?.images[0]?.url} alt={props.item?.name} /> : <img src={props.item?.images[0]?.url} alt={props.item?.name} />
           )}
           <div className={classes.playButton}>
             <PlayCircleFilledIcon
@@ -56,21 +56,21 @@ export default function MixItem(props) {
         </div>
         {props.type ? (
           props.context?.type === "playlist" ? (
-            <h4 className={classes.mixTitle}>{props.item.name}</h4>
+            <h4 className={classes.mixTitle}>{props.item?.name}</h4>
           ) : (
-            <h4 className={classes.mixTitle}>{props.item.artists?.[0].name}</h4>
+            <h4 className={classes.mixTitle}>{props.item?.artists?.[0].name}</h4>
           )
         ) : (
-          <h4 className={classes.mixTitle}>{props.item.name}</h4>
+          <h4 className={classes.mixTitle}>{props.item?.name}</h4>
         )}
 
         {props.type ? (
           props.context?.type === "playlist" ? (
             <div className={classes.mixArtists}>
-              {props?.item.artists.map((item, index) => (
+              {props?.item?.artists.map((item, index) => (
                 <a>
                   {item.name}
-                  {index === props?.item.artists.length - 1 ? "" : ","}{" "}
+                  {index === props?.item?.artists.length - 1 ? "" : ","}{" "}
                 </a>
               ))}
             </div>
@@ -78,7 +78,7 @@ export default function MixItem(props) {
             <p className={classes.mixArtists}>Artist</p>
           )
         ) : (
-          props.item ? <p className={classes.mixArtists}>{props.item.name}</p> : <p className={classes.mixArtists}>Artist</p>
+          props.item ? <p className={classes.mixArtists}>{props.item?.name}</p> : <p className={classes.mixArtists}>Artist</p>
         )}
       </div>
     </Link>

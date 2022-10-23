@@ -24,7 +24,7 @@ export default function SectionRow(props) {
         <MixItem
           context={item.context}
           item={item.track}
-          type="Recently Played"
+          type="Recently played"
         />
       ));
   }
